@@ -7,14 +7,14 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
-def get_price_by_isbn(isbn):
+def get_price(name):
     # initialize driver
     driver = webdriver.Chrome()
 
     driver.get("https://www.libertybooks.com/")
 
     search = driver.find_element(By.ID , 'search-bar')
-    search.send_keys(isbn)
+    search.send_keys(name)
 
     submit = driver.find_element(By.CLASS_NAME, 'search')
     submit = submit.find_element(By.CLASS_NAME, "icon-search")
@@ -30,3 +30,42 @@ def get_price_by_isbn(isbn):
     price = driver.find_element(By.CLASS_NAME, 'price').text.strip("Rs ")
     driver.quit()
     return price
+
+
+
+# Uses a name or isbn to look for the book
+# if more than one instances are returned, will return a list of dicts with information of
+# all books #
+def getPricesAndNames(key):
+        # initialize driver
+    driver = webdriver.Chrome()
+
+    driver.get("https://www.libertybooks.com/")
+
+    search = driver.find_element(By.ID , 'search-bar')
+    search.send_keys(key)
+
+    submit = driver.find_element(By.CLASS_NAME, 'search')
+    submit = submit.find_element(By.CLASS_NAME, "icon-search")
+    submit.click()
+
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "price"))
+        )
+    except:
+        print("Something went wrong")
+        driver.quit()
+
+    prices = driver.find_elements(By.CLASS_NAME, 'price')
+    book_names = driver.find_elements(By.CLASS_NAME, 'caption')
+    
+    for i in range(len(prices)):
+        prices[i] = prices[i].text
+    
+    for i in range(len(book_names)):
+        book_names[i] = book_names[i].text
+    print(prices)
+    print(book_names)
+    driver.quit()
+    return 1

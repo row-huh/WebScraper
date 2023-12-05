@@ -1,8 +1,10 @@
 import libertybooks
 
 def main():
-    isbn = 9780747532743
-    priceLibertyBooks = libertybooks.get_price_by_isbn(isbn)
+    # test isbn of moby dick
+    name = input("Enter name: ")
+    priceLibertyBooks = libertybooks.getPricesAndNames(name)
+    print(priceLibertyBooks)
 
 if __name__ == "__main__":
     main()
