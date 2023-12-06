@@ -6,7 +6,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-
 def get_price(name):
     # initialize driver
     driver = webdriver.Chrome()
@@ -39,15 +38,14 @@ def get_price(name):
 def getPricesAndNames(key):
         # initialize driver
     driver = webdriver.Chrome()
-
+    # initialize the website where the book needs to be searched
     driver.get("https://www.libertybooks.com/")
+    search = driver.find_element(By.ID , 'search-bar') # look for the search bar
+    search.send_keys(key)   # type the key on it 
 
-    search = driver.find_element(By.ID , 'search-bar')
-    search.send_keys(key)
-
-    submit = driver.find_element(By.CLASS_NAME, 'search')
+    submit = driver.find_element(By.CLASS_NAME, 'search') 
     submit = submit.find_element(By.CLASS_NAME, "icon-search")
-    submit.click()
+    submit.click() # find and click on the magnifying glass (search) icon
 
     try:
         element = WebDriverWait(driver, 10).until(
@@ -62,10 +60,8 @@ def getPricesAndNames(key):
     
     for i in range(len(prices)):
         prices[i] = prices[i].text
-    
-    for i in range(len(book_names)):
         book_names[i] = book_names[i].text
-    print(prices)
+     
     print(book_names)
     driver.quit()
-    return 1
+    return book_names
