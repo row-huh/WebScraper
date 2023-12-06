@@ -9,6 +9,8 @@ def main():
     write_books_to_csv(book_details, "bookinfo.csv")
 
 
+
+
 def write_books_to_csv(book_list, csv_filename):
     # Define the CSV header
     header = ['BOOK_NAME', 'AUTHOR_NAME', 'PRICE']
